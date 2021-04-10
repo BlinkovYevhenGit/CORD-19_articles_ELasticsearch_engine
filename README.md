@@ -110,11 +110,9 @@ The second Information Retrieval system is a system that, unlike the first syste
 *	Data Indexing
 *	Searching in ElasticSearch
 
->The reason for composing the second system is to examine if an exclusion of “Keywords selection” and “Text Lemmatisation” steps from the whole sequence means a deterioration of search accuracy.
-
->This hypothesis implies that a text of an original state is harder to be searched for due to the large amount of unnecesary words that occur in a majority of documents. Thus, the probability of obtaining irrelevant documents with the same words from a query is very high. 
-
-> In contrast to it, a processed text, that contains only lemmatised keywords, delivers all essential information while having a brief form that is more convenient for a search.
+>The reason for composing the second system is to examine if an exclusion of “Keywords selection” and “Text Lemmatisation” steps from the whole sequence means a deterioration of search accuracy.<br><br>
+This hypothesis implies that a text of an original state is harder to be searched for due to the large amount of unnecesary words that occur in a majority of documents. Thus, the probability of obtaining irrelevant documents with the same words from a query is very high.<br><br>
+In contrast to it, a processed text, that contains only lemmatised keywords, delivers all essential information while having a brief form that is more convenient for a search.
 
 In table 1 all precision and recall values for each of the query and each of the system are represented.
 
