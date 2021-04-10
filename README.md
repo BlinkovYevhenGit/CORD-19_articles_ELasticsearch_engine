@@ -3,7 +3,7 @@
 
 2. Compared two Information Retrieval systems in order to determine whether "Keyword Selection" and "Text Lemmatisation" steps improve search performance in terms of relevancy of documents.
 
-The first Information Retrieval system is a full system from that comprises such steps to perform a search:
+The first Information Retrieval system is a full system that comprises such steps to perform a search:
 *	Data Loading
 *	Text Normalisation
 *	Text Lemmatisation
