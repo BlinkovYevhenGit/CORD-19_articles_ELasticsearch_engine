@@ -686,204 +686,204 @@ pprint.pprint(documents)
 #
 # # In[20]:
 # Enlist typical symptoms when having a Covid disease
-# es = init_Elasticsearch_session()
-# query1_covid1_docs,context = return_searched_documents(es,
-#                                       es_index="covid3",
-#                                       query={
-#                                           "size": "10",
-#                                           "query": {
-#                                               "multi_match":{
-#                                                   "query":"Main symptoms of a Covid disease",
-#                                                   "fuzziness" : "AUTO",
-#                                                   "fields" : [ "pr_title", "pr_abstract^5" ],
-#                                                   "type":"best_fields",
-#                                                   "analyzer": "standard" ,
-#                                                   "minimum_should_match":"50%"
-#                                               }
-#                                           },
-#                                             "_source": ["cord_uid","title","abstract","publish_time"],
-#                                       })
-# #Descrive an impact of diabetes, obesity, pulmonary diseases on acquiring a severe form of coronavirus disease
-# query2_covid1_docs,context = return_searched_documents(es,
-#                                       es_index="covid3",
-#                                       query={
-#                                           "size": "10",
-#                                           "query": {
-#                                               "multi_match": {
-#                                                   "query": "Influence of diabetes, obesity, pulmonary diseases on acquiring a severe form of Coronavirus disease",
-#                                                   "fuzziness":"AUTO",
-#                                                   "fields": ["pr_title", "pr_abstract^3" ],
-#                                                   "analyzer": "english",
-#                                               }
-#                                           },
-#                                           "_source": ["cord_uid","title","abstract","publish_time"],
-#                                       })
-# query3_covid1_docs,context = return_searched_documents(es,
-#                                         es_index="covid3",
-#                                                        query={
-#                                                            "size": "10",
-#                                                            "query": {
-#                                                                "bool": {
-#                                                                    "must": {
-#                                                                        "multi_match": {
-#                                                                            "query": "The effectiveness of wearing masks",
-#                                                                            "fields": ["pr_title", "pr_abstract^5"],
-#                                                                            "analyzer": "english",
-#                                                                             "minimum_should_match":"50%"
-#                                                                        }
-#                                                                    },
-#                                                                    "filter": {
-#                                                                        "range": {
-#                                                                            "publish_time": {
-#                                                                                "gte": "2020-06-01",
-#                                                                                "lte": "2021-03-01",
-#                                                                                "format": "year_month_day",
-#                                                                            }
-#                                                                        }
-#                                                                    }
-#                                                                }
-#                                                            },
-#                                                            "_source": ["cord_uid", "title", "abstract", "publish_time"],
-#                                                        })
-#
-# query1_covid2_docs,context = return_searched_documents(es,
-#                                       es_index="covid4",
-#                                       query={
-#                                           "size": "10",
-#                                           "query": {
-#                                               "multi_match":{
-#                                                   "query":"Main symptoms of a Covid disease",
-#                                                   "fuzziness" : "AUTO",
-#                                                   "fields" : [ "pr_title", "pr_abstract^5"  ],
-#                                                   "type":"best_fields",
-#                                                   "analyzer": "standard",
-#                                                   "minimum_should_match":"50%"
-#                                               }
-#                                           },
-#                                             "_source": ["cord_uid","title","abstract","publish_time"],
-#                                       })
-# query2_covid2_docs,context = return_searched_documents(es,
-#                                       es_index="covid4",
-#                                       query={
-#                                           "size": "10",
-#                                           "query": {
-#                                               "multi_match": {
-#                                                   "query": "Influence of diabetes, obesity, pulmonary diseases on acquiring a severe form of Coronavirus disease",
-#                                                   "fuzziness":"AUTO",
-#                                                   "fields": ["pr_title", "pr_abstract^3" ],
-#                                                   "analyzer": "english",
-#                                               }
-#                                           },
-#                                           "_source": ["cord_uid","title","abstract","publish_time"],
-#                                       })
-# #Find the latest articles from June 2020 that describe the spread of coronavirus in the world
-# query3_covid2_docs,context = return_searched_documents(es,
-#                                       es_index="covid4",
-#                                                        query={
-#                                                            "size": "10",
-#                                                            "query": {
-#                                                                "bool": {
-#                                                                    "must": {
-#                                                                        "multi_match": {
-#                                                                             "query": "The effectiveness of wearing masks",
-#                                                                            "fields": ["pr_title", "pr_abstract^5"],
-#                                                                            "analyzer": "english",
-#                                                                             "minimum_should_match":"50%"
-#
-# }
-#                                                                    },
-#                                                                    "filter": {
-#                                                                        "range": {
-#                                                                            "publish_time": {
-#                                                                                "gte": "2020-06-01",
-#                                                                                "lte": "2021-03-01",
-#                                                                                "format": "year_month_day",
-#                                                                            }
-#                                                                        }
-#                                                                    }
-#                                                                }
-#                                                            },
-#                                                            "_source": ["cord_uid", "title", "abstract", "publish_time"],
-#                                                        })
-#
-#
-# augmented_results={
-#     "query1":[],
-#     "query2":[],
-#     "query3":[]
-# }
-#
-# systems_docs={"System_1":[query1_covid1_docs,query2_covid1_docs,query3_covid1_docs],"System_2":[query1_covid2_docs,query2_covid2_docs,query3_covid2_docs]}
-# def add_documents(systems_docs,augmented_results):
-#     for ind_query in range(0, len(systems_docs["System_1"])):
-#         for i in range(0, 10):
-#             inner_documents_dict = dict()
-#             for key in systems_docs["System_1"][0][0].keys():
-#                 document_value1=systems_docs["System_1"][ind_query][i][key]
-#                 document_value2=systems_docs["System_2"][ind_query][i][key]
-#                 column_comparison={
-#                     key:{"System_1": document_value1,
-#                          "System_2": document_value2}
-#                 }
-#                 inner_documents_dict.update(column_comparison)
-#             augmented_results["query"+str(ind_query+1)].append(inner_documents_dict)
-#
-#
-# import webbrowser
-# from IPython.display import HTML
-# add_documents(systems_docs,augmented_results)
-# df = pd.json_normalize(augmented_results["query1"])
-# html_table = df.to_html(classes='table table-striped')
-# file1 = open("html_table1.html","w", encoding='utf-8')#write mode
-# file1.write(html_table)
-# file1.close()
-#
-# url = 'html_table1.html'
-# webbrowser.open(url, new=2)  # open in new tab
-#
-# df = pd.json_normalize(augmented_results["query2"])
-# html_table = df.to_html(classes='table table-striped')
-# # Write-Overwrites
-# file1 = open("html_table2.html","w", encoding='utf-8')#write mode
-# file1.write(html_table)
-# file1.close()
-#
-# url = 'html_table2.html'
-# webbrowser.open(url, new=2)  # open in new tab
-#
-# df = pd.json_normalize(augmented_results["query3"])
-# html_table = df.to_html(classes='table table-striped')
-# # Write-Overwrites
-# file1 = open("html_table3.html","w", encoding='utf-8')#write mode
-# file1.write(html_table)
-# file1.close()
-# url = 'html_table3.html'
-# webbrowser.open(url, new=2)  # open in new tab
-#
-# documents = return_searched_documents(es, es_index="covid", query={
-#     "query": {
-#         "match_phrase": {"abstract": "biological diversity"}
-#     }
-# })
+es = init_Elasticsearch_session()
+query1_covid1_docs,context = return_searched_documents(es,
+                                      es_index="covid3",
+                                      query={
+                                          "size": "10",
+                                          "query": {
+                                              "multi_match":{
+                                                  "query":"Main symptoms of a Covid disease",
+                                                  "fuzziness" : "AUTO",
+                                                  "fields" : [ "pr_title", "pr_abstract^5" ],
+                                                  "type":"best_fields",
+                                                  "analyzer": "standard" ,
+                                                  "minimum_should_match":"50%"
+                                              }
+                                          },
+                                            "_source": ["cord_uid","title","abstract","publish_time"],
+                                      })
+#Descrive an impact of diabetes, obesity, pulmonary diseases on acquiring a severe form of coronavirus disease
+query2_covid1_docs,context = return_searched_documents(es,
+                                      es_index="covid3",
+                                      query={
+                                          "size": "10",
+                                          "query": {
+                                              "multi_match": {
+                                                  "query": "Influence of diabetes, obesity, pulmonary diseases on acquiring a severe form of Coronavirus disease",
+                                                  "fuzziness":"AUTO",
+                                                  "fields": ["pr_title", "pr_abstract^3" ],
+                                                  "analyzer": "english",
+                                              }
+                                          },
+                                          "_source": ["cord_uid","title","abstract","publish_time"],
+                                      })
+query3_covid1_docs,context = return_searched_documents(es,
+                                        es_index="covid3",
+                                                       query={
+                                                           "size": "10",
+                                                           "query": {
+                                                               "bool": {
+                                                                   "must": {
+                                                                       "multi_match": {
+                                                                           "query": "The effectiveness of wearing masks",
+                                                                           "fields": ["pr_title", "pr_abstract^5"],
+                                                                           "analyzer": "english",
+                                                                            "minimum_should_match":"50%"
+                                                                       }
+                                                                   },
+                                                                   "filter": {
+                                                                       "range": {
+                                                                           "publish_time": {
+                                                                               "gte": "2020-06-01",
+                                                                               "lte": "2021-03-01",
+                                                                               "format": "year_month_day",
+                                                                           }
+                                                                       }
+                                                                   }
+                                                               }
+                                                           },
+                                                           "_source": ["cord_uid", "title", "abstract", "publish_time"],
+                                                       })
 
-# documents,context = return_searched_documents(es, es_index="covid3", query={
-#     "query": {
-#         "bool": {
-#           "filter": {
-#             "exists": {
-#               "field": "abstract"
-#             }
-#           },
-#           "must_not": {
-#             "term": {
-#               "abstract.keyword": "None"
-#             }
-#           }
-#         }
-#     },
-#     "size":"50",
-#     "_source": ["cord_uid","title","abstract"]
-# })
+query1_covid2_docs,context = return_searched_documents(es,
+                                      es_index="covid4",
+                                      query={
+                                          "size": "10",
+                                          "query": {
+                                              "multi_match":{
+                                                  "query":"Main symptoms of a Covid disease",
+                                                  "fuzziness" : "AUTO",
+                                                  "fields" : [ "pr_title", "pr_abstract^5"  ],
+                                                  "type":"best_fields",
+                                                  "analyzer": "standard",
+                                                  "minimum_should_match":"50%"
+                                              }
+                                          },
+                                            "_source": ["cord_uid","title","abstract","publish_time"],
+                                      })
+query2_covid2_docs,context = return_searched_documents(es,
+                                      es_index="covid4",
+                                      query={
+                                          "size": "10",
+                                          "query": {
+                                              "multi_match": {
+                                                  "query": "Influence of diabetes, obesity, pulmonary diseases on acquiring a severe form of Coronavirus disease",
+                                                  "fuzziness":"AUTO",
+                                                  "fields": ["pr_title", "pr_abstract^3" ],
+                                                  "analyzer": "english",
+                                              }
+                                          },
+                                          "_source": ["cord_uid","title","abstract","publish_time"],
+                                      })
+#Find the latest articles from June 2020 that describe the spread of coronavirus in the world
+query3_covid2_docs,context = return_searched_documents(es,
+                                      es_index="covid4",
+                                                       query={
+                                                           "size": "10",
+                                                           "query": {
+                                                               "bool": {
+                                                                   "must": {
+                                                                       "multi_match": {
+                                                                            "query": "The effectiveness of wearing masks",
+                                                                           "fields": ["pr_title", "pr_abstract^5"],
+                                                                           "analyzer": "english",
+                                                                            "minimum_should_match":"50%"
+
+}
+                                                                   },
+                                                                   "filter": {
+                                                                       "range": {
+                                                                           "publish_time": {
+                                                                               "gte": "2020-06-01",
+                                                                               "lte": "2021-03-01",
+                                                                               "format": "year_month_day",
+                                                                           }
+                                                                       }
+                                                                   }
+                                                               }
+                                                           },
+                                                           "_source": ["cord_uid", "title", "abstract", "publish_time"],
+                                                       })
+
+
+augmented_results={
+    "query1":[],
+    "query2":[],
+    "query3":[]
+}
+
+systems_docs={"System_1":[query1_covid1_docs,query2_covid1_docs,query3_covid1_docs],"System_2":[query1_covid2_docs,query2_covid2_docs,query3_covid2_docs]}
+def add_documents(systems_docs,augmented_results):
+    for ind_query in range(0, len(systems_docs["System_1"])):
+        for i in range(0, 10):
+            inner_documents_dict = dict()
+            for key in systems_docs["System_1"][0][0].keys():
+                document_value1=systems_docs["System_1"][ind_query][i][key]
+                document_value2=systems_docs["System_2"][ind_query][i][key]
+                column_comparison={
+                    key:{"System_1": document_value1,
+                         "System_2": document_value2}
+                }
+                inner_documents_dict.update(column_comparison)
+            augmented_results["query"+str(ind_query+1)].append(inner_documents_dict)
+
+
+import webbrowser
+from IPython.display import HTML
+add_documents(systems_docs,augmented_results)
+df = pd.json_normalize(augmented_results["query1"])
+html_table = df.to_html(classes='table table-striped')
+file1 = open("html_table1.html","w", encoding='utf-8')#write mode
+file1.write(html_table)
+file1.close()
+
+url = 'html_table1.html'
+webbrowser.open(url, new=2)  # open in new tab
+
+df = pd.json_normalize(augmented_results["query2"])
+html_table = df.to_html(classes='table table-striped')
+# Write-Overwrites
+file1 = open("html_table2.html","w", encoding='utf-8')#write mode
+file1.write(html_table)
+file1.close()
+
+url = 'html_table2.html'
+webbrowser.open(url, new=2)  # open in new tab
+
+df = pd.json_normalize(augmented_results["query3"])
+html_table = df.to_html(classes='table table-striped')
+# Write-Overwrites
+file1 = open("html_table3.html","w", encoding='utf-8')#write mode
+file1.write(html_table)
+file1.close()
+url = 'html_table3.html'
+webbrowser.open(url, new=2)  # open in new tab
+
+documents = return_searched_documents(es, es_index="covid", query={
+    "query": {
+        "match_phrase": {"abstract": "biological diversity"}
+    }
+})
+
+documents,context = return_searched_documents(es, es_index="covid3", query={
+    "query": {
+        "bool": {
+          "filter": {
+            "exists": {
+              "field": "abstract"
+            }
+          },
+          "must_not": {
+            "term": {
+              "abstract.keyword": "None"
+            }
+          }
+        }
+    },
+    "size":"50",
+    "_source": ["cord_uid","title","abstract"]
+})
 
 
 # System 1 System 2
