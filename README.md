@@ -4,7 +4,7 @@ View solution [here](https://nbviewer.jupyter.org/github/BlinkovYevhenGit/CORD-1
 
 2. Compared two Information Retrieval systems in order to determine whether "Keyword Selection" and "Text Lemmatisation" steps improve search performance in terms of relevancy of documents.
 
-View updated version [here](https://github.com/BlinkovYevhenGit/CORD-19_articles_ELasticsearch_engine/blob/main/Assignment%201/Information%20Retrieval.py]
+View updated version [here](https://github.com/BlinkovYevhenGit/CORD-19_articles_ELasticsearch_engine/blob/main/Assignment%201/Information%20Retrieval.py)
 
 1. **Query 1**
 
