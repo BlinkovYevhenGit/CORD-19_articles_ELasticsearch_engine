@@ -1,5 +1,6 @@
 # CORD-19 articles ELasticsearch engine
 1. Created a preprocessing pipeline in Python for CORD-19 articles from [Kaggle]( https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge) to perform a search using Elasticsearch.
+
 View solution [here](https://nbviewer.jupyter.org/github/BlinkovYevhenGit/CORD-19_articles_ELasticsearch_engine/blob/main/Assignment%201/Information_Retrieval_Assignment_1_2003667.ipynb)
 
 2. Compared two Information Retrieval systems in order to determine whether "Keyword Selection" and "Text Lemmatisation" steps improve search performance in terms of relevancy of documents.
