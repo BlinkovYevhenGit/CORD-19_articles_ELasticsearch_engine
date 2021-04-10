@@ -1,7 +1,101 @@
 # CORD-19 articles ELasticsearch engine
 1. Created a preprocessing pipeline in Python for CORD-19 articles from [Kaggle]( https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge) to perform a search using Elasticsearch.
+View solution [here](https://nbviewer.jupyter.org/github/BlinkovYevhenGit/CORD-19_articles_ELasticsearch_engine/blob/main/Assignment%201/Information_Retrieval_Assignment_1_2003667.ipynb)
 
 2. Compared two Information Retrieval systems in order to determine whether "Keyword Selection" and "Text Lemmatisation" steps improve search performance in terms of relevancy of documents.
+
+View updated version [here](https://github.com/BlinkovYevhenGit/CORD-19_articles_ELasticsearch_engine/blob/main/Assignment%201/Information%20Retrieval.py]
+
+1. **Query 1**
+
+* **Information need** 
+ 
+>Find no more than 10 documents that describe within processed fields “pr_title  and “pr_absract” the main symptoms that people acquire when they get infected by COVID-19. <br> Return information from fields “cord_uid”, “title”, “abstract”, “publish_time” as the result of a search.
+* **Code**
+
+ ```json
+ query={
+    "size": "10",
+    "query": {
+        "multi_match":{
+            "query":"Main symptoms of a Covid disease",
+            "fuzziness" : "AUTO",
+            "fields" : [ "pr_title", "pr_abstract^5" ],
+            "type":"best_fields",
+            "analyzer": "standard" ,
+            "minimum_should_match":"50%"
+        }
+    },
+      "_source": ["cord_uid", "title", "abstract", "publish_time"]
+}
+```
+
+View returned documents for the query 1 [here](https://nbviewer.jupyter.org/github/BlinkovYevhenGit/CORD-19_articles_ELasticsearch_engine/blob/main/Assignment%201/query_1_results.html)
+
+2. **Query 2**
+
+* **Information need** 
+
+>Find no more than 10 documents that describe within processed fields “pr_title  and “pr_absract” how having diabetes, obesity or pulmonary diseases influence on acquiring a severe form of a coronavirus disease. <br>
+Return information from fields “cord_uid”, “title”, “abstract”, “publish_time” as the result of a search.
+
+* **Code**
+
+```json
+query={
+    "size": "10",
+    "query": {
+        "multi_match": {
+            "query": "Influence of diabetes, obesity, pulmonary diseases on acquiring a severe form of Coronavirus disease",
+            "fuzziness":"AUTO",
+            "fields": ["pr_title", "pr_abstract^3" ],
+            "analyzer": "english"
+        }
+    },
+    "_source": ["cord_uid","title","abstract","publish_time"]
+}
+```
+
+View returned documents for the query 2 [here](https://nbviewer.jupyter.org/github/BlinkovYevhenGit/CORD-19_articles_ELasticsearch_engine/blob/main/Assignment%201/query_2_results.html)
+
+3. **Query 3**
+
+* **Information need** 
+
+>Find no more than 10 of the latest documents dated from May 2020 till March 2021 that describe within processed fields “pr_title  and “pr_absract” how effective is wearing of face coverings in terms of prevention of spread of COVID-19.
+Return information from fields “cord_uid”, “title”, “abstract”, “publish_time” as the result of a search.
+
+* **Code**
+
+```json
+query={
+    "size": "10",
+    "query": {
+        "bool": {
+            "must": {
+                "multi_match": {
+                    "query":"The effectiveness of wearing masks",
+                    "fields":["pr_title", "pr_abstract^5"],
+                    "analyzer": "english",
+                    "minimum_should_match":"50%"
+                }
+            },
+            "filter": {
+                "range": {
+                    "publish_time": {
+                        "gte": "2020-06-01",
+                        "lte": "2021-03-01",
+                        "format": "year_month_day"
+                    }
+                }
+            }
+        }
+    },
+    "_source": ["cord_uid", "title", "abstract", "publish_time"]
+}
+```
+
+View returned documents for the query 3 [here](https://nbviewer.jupyter.org/github/BlinkovYevhenGit/CORD-19_articles_ELasticsearch_engine/blob/main/Assignment%201/query_3_results.html)
 
 The first Information Retrieval system is a full system that comprises such steps to perform a search:
 *	Data Loading
